@@ -1,0 +1,52 @@
+To get a collapsing toolbar, we need the design library.
+
+In the following example, we used a recyclerview to display the list, so an 
+additional library for the recyclerview is needed.
+
+The root layout has to be a Coordinator layout, which is a beefed up FrameLayout.
+
+Use the v7 support toolbar to display the actual toolbar.
+
+Getting to the crux. The Toolbar has to be wrapped in a CollapsingToolbarLayout,
+which in turn has to be wrapped in an AppBarLayout.
+
+Use the app:layout_behavior="@string/appbar_scrolling_view_behavior" as an
+attribute for both the RecyclerView and the AppBarLayout. This particular
+attribute is used to denote a scrolling relationship between the 2 views.
+The RecyclerView allows nested scrolling and the AppBar needs to react 
+accordingly. 
+
+android:fitsSystemWindows="true"
+The above has to be set and true for both the AppBarLayout and the 
+CollapsingToolbarLayout.
+
+Add the app:layout_scrollFlags attribute to the CollapsingToolbarLayotut. The
+possible values for the flags are :
+	a) scroll (This is essential for all flags)
+
+	b) enterAlways : As soon as the user scrolls up (Ex: Scrolling to top of
+	   				 the list from the bottom) the Toolbar appears. The toolbar
+	   				 is exposed as soon as scrolling happens. The toolbar 
+	   				 expands to the complete height.
+
+	c) enterAlwaysCollapsed : (This has to be set in conjuction with minHeight) 
+					The toolbar will expand only till the set minHeight(if set). 
+					Complete expansion will happen only when the top of the list 
+					is reached. Example. Assume there is a large image which 
+					shrinks to a toolbar when scrolled down. Upon scrolling up 
+					from the bottom, only the minimum height of the toolbar is 
+					shown. Only when the top of the list is reached, will the 
+					entire image expand
+
+	d) exitUntilCollapsed : minHeight must be set. When scrolling down, the
+							toolbar usually collapses completely. This flag 
+							ensures that the toolbar collapses only till the set 
+							minHeight.
+
+	e) snap : This either completely maximises the toolbar or minimizes it. Akin
+			  to rounding off. If the view has been shrunk to less than 50% of 
+			  its size, then the entire view is shrunk. 
+			  If the view is greater than 50% of its original size, then the 
+			  entire view is expanded.
+
+Collapsed here implies the minimized height of the toolbar.
